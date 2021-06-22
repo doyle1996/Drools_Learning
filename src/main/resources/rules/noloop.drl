@@ -1,0 +1,19 @@
+//no-loop属性用于防止死循环，
+//当规则通过update之类的函数修改了Fact对象时，
+//可能使当前规则再次被激活从而导致死循环。取值类型为Boolean，
+//默认值为false。测试步骤如下
+
+
+package testnoloop
+import com.brms.drools.entity.Student
+/*
+    此规则文件用于测试no-loop属性
+*/
+rule "rule_noloop"
+    no-loop true
+    when
+       $s:Student(age==50)
+    then
+    update($s); //调用update方法会导致相关规则重新匹配
+    System.out.println("规则rule_noloop触发");
+end
